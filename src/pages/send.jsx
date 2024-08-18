@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { ethers } from "ethers";
 import { useSelector } from "react-redux";
+import getProvider from "../components/getprovider";
 
 
 export default function Send() {
@@ -10,32 +11,34 @@ export default function Send() {
     const provider = useSelector((state) => state.provider);
 
     const handleSendEther = async (data) => {
-      const { senderaddress, recipentaddress, amount } = data;
-  
-      try {
-        //const infuraURl = "https://mainnet.infura.io/v3/6788a7defd274be796343d21820517cc";
-        //const provider = new ethers.providers.JsonRpcProvider(infuraURl);
-        console.log(provider);
-        const privateKey = prompt('Enter your private key');
-         
-        // Get the provider and signer from the wallet
-        const wallet = new ethers.Wallet(privateKey, provider);
-  
-        // Convert amount to Ether (from string)
-        const value = ethers.utils.parseEther(amount);
-  
-        // Send the transaction
-        const tx = await signer.sendTransaction({
-          to: recipient,
-          value,
-        });
-        await tx.wait()
-  
-        console.log('Transaction sent:', tx);
-        alert('Transaction sent!');
-      } catch (error) {
-        console.error('Error sending Ether:', error);
-        alert('Failed to send Ether');
+      const {recipentaddress, amount } = data;
+      if(ethers.utils.isAddress(recipentaddress)){
+          try {
+            const provider = getProvider();
+            console.log(provider);
+            const privateKey = prompt('Enter your private key');
+
+            // Get the provider and signer from the wallet
+            const wallet = new ethers.Wallet(privateKey, provider);
+          
+            // Convert amount to Ether (from string)
+            const value = ethers.utils.parseEther(amount);
+          
+            // Send the transaction
+            const tx = await signer.sendTransaction({
+              to: recipentaddress,
+              value,
+            });
+            await tx.wait()
+          
+            console.log('Transaction sent:', tx);
+            alert('Transaction sent!');
+          } catch (error) {
+            console.error('Error sending Ether:', error);
+            alert('Failed to send Ether');
+          }
+      }else {
+        alert('Invalid Address');
       }
     };
     

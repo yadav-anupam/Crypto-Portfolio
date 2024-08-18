@@ -8,13 +8,26 @@ const watchlistSlice = createSlice({
         addtowatchlist : (state, action) => {
             const addr = action.payload["address"];
             const watch = action.payload["watchlist"];
-
+            if(!state[addr]){
+                state[addr] = watch;
+            }
+            else{
+                state[addr] = state[addr].concat(watch);
+            }
             console.log(`the value of address is ${addr} with ${typeof(addr)} and watchlist is ${watch} with ${typeof(watch)}`)
-            state[addr] = watch;
         },
         removefromwatchlist: (state , action) => {
-            let index = state.indexOf(action.payload);
-            state.splice(index, 1);
+            let address = action.payload["address"];
+            let token = action.payload["token"];
+            for (let t in state[address]) {
+                console.log(`The value of t is ${t} and the value of state[address][t] is ${state[address][t]}`);
+                if(state[address][t] == token){
+                    state[address].splice(t,1);
+                    console.log(`Removed from watchlist  ${token} from ${address}`);
+                }
+            }
+            //console.log(`Removed from watchlist  ${token} from ${address}`);
+            console.log(state[address]);
         }
     }
 })
