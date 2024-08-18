@@ -1,6 +1,7 @@
 import React, { act } from "react";
 import { Link } from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
+import  Container  from "./container";
 
 function Header(){
 
@@ -22,14 +23,15 @@ function Header(){
         active : true,
         },
         {
-        name: "wallets",
-        slug: "/wallets",
+        name : "send",
+        slug: "/send",
         active: true,
-        },
+        }
     ]
 
     return(
-        <header className='py-3 shadow bg-gray-500'>
+        <header className='Header py-3 shadow bg-gray-500'>
+            <Container>
                 <nav className='flex'>
                     <div className='mr-4'>
                         <Link to='/'>
@@ -49,6 +51,7 @@ function Header(){
                     )}
                 </ul>
                 </nav>
+            </Container>
         </header>
     )
 }

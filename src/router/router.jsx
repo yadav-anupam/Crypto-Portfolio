@@ -4,6 +4,7 @@ import ConnectWallet from "../pages/connectwallet"
 import Watchlist from "../pages/watchlist"
 import Home from "../pages/home"
 import Send from "../pages/send"
+import Wallet from "../pages/wallet"
 
 const router = createBrowserRouter([
     {
@@ -15,20 +16,24 @@ const router = createBrowserRouter([
           element: <Home />,
         },
         {
+          path : "wallet",
+          element: <Wallet />
+        },
+        {
+          path : "send",
+          element: <Send />
+        },
+        {
+          path : "watchlist",
+          element : <Watchlist/>
+        },
+        {
           path: "/connectwallet",
           element: <ConnectWallet />,
         },
-        {
-          path: "/watchlist",
-          element: <Watchlist />,
-        },
       ]
-    },
-    {
-      path : "/send",
-      element: <Send />
 
-    }
+    },
 
 ])
 

@@ -15,4 +15,4 @@ const walletSlice = createSlice({
 })
 
 export const { addwallet, removewallet } = walletSlice.actions;   
-export default walletSlice.reducer;  
+export default walletSlice.reducer ;  
