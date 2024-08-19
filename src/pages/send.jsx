@@ -4,61 +4,70 @@ import { ethers } from "ethers";
 import { useSelector } from "react-redux";
 import getProvider from "../components/getprovider";
 
-
 export default function Send() {
-    const { register, handleSubmit } = useForm();
-    const wallet = useSelector((state) => state.currwallet);
-    const provider = useSelector((state) => state.provider);
+  const { register, handleSubmit } = useForm();
+  const wallet = useSelector((state) => state.currwallet);
 
-    const handleSendEther = async (data) => {
-      const {recipentaddress, amount } = data;
-      if(ethers.utils.isAddress(recipentaddress)){
-          try {
-            const provider = getProvider();
-            console.log(provider);
-            const privateKey = prompt('Enter your private key');
-
-            // Get the provider and signer from the wallet
-            const wallet = new ethers.Wallet(privateKey, provider);
-          
-            // Convert amount to Ether (from string)
-            const value = ethers.utils.parseEther(amount);
-          
-            // Send the transaction
-            const tx = await signer.sendTransaction({
-              to: recipentaddress,
-              value,
-            });
-            await tx.wait()
-          
-            console.log('Transaction sent:', tx);
-            alert('Transaction sent!');
-          } catch (error) {
-            console.error('Error sending Ether:', error);
-            alert('Failed to send Ether');
-          }
-      }else {
-        alert('Invalid Address');
+  const handleSendEther = async (data) => {
+    const { recipentaddress, amount } = data;
+    if (ethers.utils.isAddress(recipentaddress)) {
+      try {
+        const provider = getProvider();
+        const privateKey = prompt('Enter your private key');
+        
+        const wallet = new ethers.Wallet(privateKey, provider);
+        const value = ethers.utils.parseEther(amount);
+        
+        const tx = await wallet.sendTransaction({
+          to: recipentaddress,
+          value,
+        });
+        await tx.wait();
+        
+        console.log('Transaction sent:', tx);
+        alert('Transaction sent!');
+      } catch (error) {
+        console.error('Error sending Ether:', error);
+        alert('Failed to send Ether');
       }
-    };
-    
-    return (
-      <form className = "rounded-3xl px-0  bg-rose-800 border-t-2 border border-gray-300 p-4 " onSubmit={handleSubmit(handleSendEther)}>
-        <div className="bg-transparent py-1 px-0 text-3xl">From</div>
-        <div className="bg-transparent py-1 px-0">
-        <input className="text-1xl" value={wallet} disabled /> <br/>
+    } else {
+      alert('Invalid Address');
+    }
+  };
+
+  return (
+    <div className="max-w-md mx-auto bg-gray-800 text-white rounded-lg shadow-lg p-6">
+      <h2 className="text-3xl font-bold mb-4">Send Ether</h2>
+      <form onSubmit={handleSubmit(handleSendEther)}>
+        <div className="mb-4">
+          <label className="block text-lg font-medium mb-2">From</label>
+          <input 
+            className="w-full p-2 bg-gray-900 text-gray-300 rounded-md"
+            value={wallet} 
+            disabled 
+          />
         </div>
-        <div className="bg-transparent py-1 px-0 text-3xl">To</div>
-        <div className="bg-transparent py-1 px-0 ">
-        <input className="text-1xl" {...register("recipentaddress")} /><br/>
+        <div className="mb-4">
+          <label className="block text-lg font-medium mb-2">To</label>
+          <input 
+            className="w-full p-2 bg-gray-900 text-gray-300 rounded-md"
+            {...register("recipentaddress")} 
+          />
         </div>
-        <div className="bg-transparent py-1 px-0 text-3xl" >Amount</div>
-        <div className="bg-transparent py-1 px-0 " >
-        <input  className="text-1xl" {...register("amount")} />
+        <div className="mb-4">
+          <label className="block text-lg font-medium mb-2">Amount</label>
+          <input 
+            className="w-full p-2 bg-gray-900 text-gray-300 rounded-md"
+            {...register("amount")} 
+          />
         </div>
-        <div className="bg-transparent py-1 px-0 " >
-        <input className="rounded-2xl text-1xl bg-black p-5 rou lg:hover:text-green-600 sm:hover:bg-blue-600" type="submit" />
-        </div>
+        <button 
+          type="submit" 
+          className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-500 transition"
+        >
+          Send
+        </button>
       </form>
-  )
+    </div>
+  );
 }

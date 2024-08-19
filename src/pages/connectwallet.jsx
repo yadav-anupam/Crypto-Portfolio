@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch , useSelector} from "react-redux";
 import { addwallet } from "../store/walletslice";
 import { addtowatchlist } from "../store/watchlistslice";
 import { ethers } from "ethers";
 import { useNavigate } from "react-router-dom";
 
+
 function ConnectWallet() {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const wallet = useSelector((state) => state.wallet);
 
   async function connectMetamask() {
     if (window.ethereum) {
@@ -17,6 +19,11 @@ function ConnectWallet() {
         const account = await window.ethereum.request({ method: "eth_requestAccounts" });
         console.log(account);
         console.log("Connected to MetaMask");
+        console.log(`${typeof(wallet)} with value of ${wallet}`);
+        if(wallet.find((w) => w === account[0])) {
+          alert("Wallet already connected");
+          return;
+        }
         dispatch(addwallet(account[0]));
         dispatch(addtowatchlist({ address: account[0], watchlist: [] }));
         alert("Connected to MetaMask wallet of address: " + account[0]);
@@ -34,6 +41,10 @@ function ConnectWallet() {
       const address = e.walletaddress;
       if (!ethers.utils.isAddress(address)) {
         console.error(`Invalid address: ${address}`);
+        return;
+      }
+      if(wallet.find((w) => w === address)) {
+        alert("Wallet already connected");
         return;
       }
       dispatch(addwallet(address));

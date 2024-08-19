@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 
-const tokenAbi = [
+const ERC20_ABI = [
     // balanceOf function
     "function balanceOf(address owner) view returns (uint256)",
     // decimals function
@@ -8,8 +8,8 @@ const tokenAbi = [
     "function allowance(address owner, address spender) view returns (uint256)"
 ];
 
-export default async function getTokenBalance(provider, tokenAddress, walletAddress) {
-    const tokenContract = new ethers.Contract(tokenAddress, tokenAbi, provider);
+async function getTokenBalance(provider, tokenAddress, walletAddress) {
+    const tokenContract = new ethers.Contract(tokenAddress, ERC20_ABI, provider);
     try {
         console.log("Fetching token balance...");
         // Fetch the token balance
@@ -36,3 +36,20 @@ export default async function getTokenBalance(provider, tokenAddress, walletAddr
         return "Error";
     }
 }
+
+async function checkAllowance(provider, tokenAddress, ownerAddress, spenderAddress) {
+
+    // Create a contract instance
+    const tokenContract = new ethers.Contract(tokenAddress, ERC20_ABI, provider);
+    try {
+        // Get the allowance
+        const walAddress = ownerAddress[0].toString();
+        const allowance = await tokenContract.allowance(walAddress , spenderAddress);
+        return ethers.utils.formatUnits(allowance, 18);  // Formatting the allowance
+    } catch (error) {
+        console.error("Error fetching allowance:", error);
+        return null;
+    }
+}
+
+export { getTokenBalance, checkAllowance };

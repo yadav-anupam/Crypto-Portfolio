@@ -19,7 +19,7 @@ function Header() {
   ];
 
   return (
-    <header className="bg-gray-800 py-3 shadow-md">
+    <header className="bg-white py-3 shadow-md">
       <Container>
         <nav className="flex items-center justify-between">
           <div>

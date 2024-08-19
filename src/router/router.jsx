@@ -31,6 +31,7 @@ const router = createBrowserRouter([
           path: "/connectwallet",
           element: <ConnectWallet />,
         },
+        
       ]
 
     },

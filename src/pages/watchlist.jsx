@@ -4,7 +4,8 @@ import { removefromwatchlist, addtowatchlist } from "../store/watchlistslice";
 import { useForm } from "react-hook-form";
 import { ethers } from "ethers";
 import getProvider from "../components/getprovider";
-import getTokenBalance from "../components/getTokenbalance";
+import {getTokenBalance} from "../components/getTokenbalance";
+import AllowanceModal from "./allowance";
 
 export default function Watchlist() {
   const dispatch = useDispatch();
@@ -16,6 +17,10 @@ export default function Watchlist() {
 
   const addingthetoken = (data) => {
     if (ethers.utils.isAddress(data.token)) {
+      if(watchlist.find((w) => w === data.token)) {
+        alert("Token already in watchlist");
+        return;
+      }
       dispatch(addtowatchlist({ address: currwallet, watchlist: data.token }));
     } else {
       console.log("Invalid Address");
@@ -39,6 +44,17 @@ export default function Watchlist() {
     });
   }, [watchlist]);
 
+
+  const [showAllowanceModal, setShowAllowanceModal] = useState(false);
+
+    const openModal = () => {
+        setShowAllowanceModal(true);
+    };
+
+    const closeModal = () => {
+        setShowAllowanceModal(false);
+    };
+
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
       <div className="max-w-4xl mx-auto">
@@ -53,6 +69,16 @@ export default function Watchlist() {
                   {loading[item] ? "Loading..." : balances[item] !== undefined ? `${balances[item]} tokens` : "Balance not available"}
                 </p>
               </div>
+              <button
+                onClick={openModal} className="bg-black hover:bg-red-700 text-white py-2 px-4 rounded-lg transition duration-200"
+              >
+                Check Allowance
+              </button>
+              {showAllowanceModal && <AllowanceModal onClose={closeModal}  tokenAddress = {item}/> }
+              {/* <div>
+                  <button onClick={openModal}>Check Allowance</button>
+                  <AllowanceModal show={showAllowanceModal} onClose={closeModal} />
+              </div> */}
               <button
                 onClick={() => dispatch(removefromwatchlist({ address: currwallet, token: item }))}
                 className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg transition duration-200"
