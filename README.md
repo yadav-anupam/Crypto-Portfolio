@@ -23,15 +23,17 @@ Before running the project, make sure you have the following installed:
    git clone https://github.com/Anupam-2578/Crypto-Portfolio.git
 
 2. **Navigate to project Directory**
+
     ```bash
     cd Crypto-Portfolio
 
 3. **Install Dependencies**
+
     ```bash
     npm install
 
 4. **Run the Project**
+    This command will launch the application on a local development server
+
     ```bash
     npm run dev
-    
-    This command will launch the application on a local development server
