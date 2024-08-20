@@ -13,7 +13,7 @@ export default function Home() {
 
   useEffect(() => {
     const fetchBalances = async () => {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const provider = getProvider();
       const newBalances = {};
       for (let address of wallet) {
         try {

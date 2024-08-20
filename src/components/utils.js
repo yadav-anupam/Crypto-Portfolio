@@ -26,11 +26,6 @@ async function getTokenBalance(provider, tokenAddress, walletAddress) {
         const formattedBalance = ethers.utils.formatUnits(balance, decimals);
         console.log("Token balance:", formattedBalance);
         return formattedBalance;
-
-        console.log(`The value of provider is ${provider} with type of ${typeof(provider)}`);
-        console.log(`The value of wallet is ${walAddress} with type of ${typeof(walAddress)}`);
-        console.log(`The value of tokenAddress is ${tokenAddress} with type of ${typeof(tokenAddress)}`);
-        return "Token balance";
     } catch (error) {
         console.error("Error fetching token balance:", error);
         return "Error";

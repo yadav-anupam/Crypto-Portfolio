@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom"; // To get token address from the path
 import getProvider from "../components/getprovider";
-import { checkAllowance } from "../components/getTokenbalance";
+import { checkAllowance } from "../components/utils";
 import { ethers } from "ethers";
 
 export default function AllowanceModal({ onClose , tokenAddress }) {

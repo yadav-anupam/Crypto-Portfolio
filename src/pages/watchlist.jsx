@@ -4,7 +4,7 @@ import { removefromwatchlist, addtowatchlist } from "../store/watchlistslice";
 import { useForm } from "react-hook-form";
 import { ethers } from "ethers";
 import getProvider from "../components/getprovider";
-import {getTokenBalance} from "../components/getTokenbalance";
+import {getTokenBalance} from "../components/utils";
 import AllowanceModal from "./allowance";
 
 export default function Watchlist() {
