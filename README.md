@@ -1,8 +1,33 @@
-#Crypto profolio 
+# 🪙 Crypto Portfolio
 
-How to run the project :
-Step 1: Ensure that node is installed on your local machine 
-Step 2: Clone the repository (git clone https://github.com/Anupam-2578/Crypto-Portfolio.git)
-Step 3: For installation of all the packages - run npm i or npm install 
-Step 4: Ensure that you have metamask wallet on your local machine
-Step 5: For running the project run - npm run dev
+Welcome to the **Crypto Portfolio** project! This web application allows users to manage and view their cryptocurrency wallets, providing features such as balance tracking, token management, and wallet connection.
+
+## 🚀 Getting Started
+
+Follow these steps to set up and run the project on your local machine.
+
+### Prerequisites
+
+Before running the project, make sure you have the following installed:
+
+- **Node.js**: [Download Node.js](https://nodejs.org/) and install it on your machine.
+- **MetaMask**: [Install MetaMask](https://metamask.io/) as a browser extension.
+
+### Installation
+
+1. **Clone the Repository**
+
+   Clone the project to your local machine using Git:
+
+   ```bash
+   git clone https://github.com/Anupam-2578/Crypto-Portfolio.git
+
+2. **Navigate to project Directory**
+    cd Crypto-Portfolio
+
+3. **Install Dependencies**
+    npm install
+
+4. **Run the Project**
+    npm run dev
+    This command will launch the application on a local development server
